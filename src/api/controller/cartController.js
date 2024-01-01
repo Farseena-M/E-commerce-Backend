@@ -1,14 +1,15 @@
-const cart = require('../../model/cartSchema')
-const asyncErrorHandler = require('../../utils/asyncErrorHandler')
-const products = require('../../model/productSchema');
-const customError = require('../../utils/customError');
+const asyncErrorHandler = require('../utils/asyncErrorHandler')
+const cart = require('../model/cartSchema')
+const products = require('../model/productSchema');
+const customError = require('../utils/customError');
 
 const addProductToCart = asyncErrorHandler(async(req,res,next)=>{
     const userId = req.params.id;
-    const productId = req.body.product;
-    const checkProduct = await products.findById(productId)
+    const productId = req.body.Product;
+    const checkProduct = await products.findById(productId);
     if(!checkProduct){ 
        const error = new customError('Product not found') 
+       next(error)
     }
     const existingCart = await cart.findOne({User:userId})
 
@@ -18,10 +19,9 @@ const addProductToCart = asyncErrorHandler(async(req,res,next)=>{
             const error = new customError('Product already exist')
             next(error)
          }else{
-          
         existingCart.Product.push(productId)
-        existingCart.TotalPrice+=checkProduct.price
-        existingCart.save()
+        existingCart.TotalPrice += checkProduct.price
+        existingCart.save();
         res.status(200).json({
             status:'Success',
             data:{
@@ -30,7 +30,7 @@ const addProductToCart = asyncErrorHandler(async(req,res,next)=>{
         })
     }
     }else{
-        const newCart = await cart.create({User:userId,product:[productId]})
+        const newCart = await cart.create({User:userId,Product:[productId]})
         res.status(200).json({
             status:'Success',
             data:{

@@ -1,6 +1,6 @@
-const products = require('../../model/productSchema')
-const asyncErrorHandler = require('../../utils/asyncErrorHandler');
-const customError = require('../../utils/customError')
+const products = require('../model/productSchema')
+const asyncErrorHandler = require('../utils/asyncErrorHandler');
+const customError = require('../utils/customError')
 const prdcts = asyncErrorHandler(async(req,res,next)=>{
     const newProduct = await products.create(req.body)
     res.status(201).json({
@@ -24,7 +24,6 @@ const getAllProducts = asyncErrorHandler(async(req,res,next)=>{
 const getProductByCategory = asyncErrorHandler(async(req,res,next)=>{
     const category = req.params.category
     const categoryProduct = await products.find({category})
-    console.log(categoryProduct);
     if(categoryProduct.length === 0){
         return next(new customError("Category does not exist","404"))
        }else{

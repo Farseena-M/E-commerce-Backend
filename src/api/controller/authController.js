@@ -1,7 +1,7 @@
-const user = require('../../model/userSchema')
-const asyncErrorHandler = require('../../utils/asyncErrorHandler');
+const user = require('../model/userSchema')
+const asyncErrorHandler = require('../utils/asyncErrorHandler');
 const jwt = require('jsonwebtoken')
-const customError = require('../../utils/customError')
+const customError = require('../utils/customError')
 
 
 const signToken = (id) =>{

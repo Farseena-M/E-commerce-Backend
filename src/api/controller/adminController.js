@@ -1,7 +1,7 @@
-const user = require('../../model/userSchema')
-const customError = require('../../utils/customError')
-const asyncErrorHandler = require('../../utils/asyncErrorHandler')
-const products = require('../../model/productSchema')
+const user = require('../model/userSchema')
+const customError = require('../utils/customError')
+const asyncErrorHandler = require('../utils/asyncErrorHandler')
+const products = require('../model/productSchema')
 const getAllUsers = asyncErrorHandler(async(req,res,next)=>{
     const allUsers = await user.find()
      if(!allUsers){
@@ -16,6 +16,7 @@ const getAllUsers = asyncErrorHandler(async(req,res,next)=>{
         })
      }
 })
+
 
 
 const getUsersById = asyncErrorHandler(async(req,res,next)=>{

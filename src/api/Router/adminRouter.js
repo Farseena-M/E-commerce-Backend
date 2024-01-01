@@ -1,15 +1,14 @@
 const express = require('express')
-const adminController = require('../api/controller/adminController')
+const adminController = require('../controller/adminController')
 const adminRouter = express.Router()
 
 adminRouter.route('/users')
 .get(adminController.getAllUsers)
 
-
 adminRouter.route('/users/:id')
 .get(adminController.getUsersById)
 
-adminRouter.route('/products/:id')
+adminRouter.route('/category/:category')
 .get(adminController.getProductByCategory)
 
 adminRouter.route('/products/:id')

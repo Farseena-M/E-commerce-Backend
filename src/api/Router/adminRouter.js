@@ -1,25 +1,20 @@
 const express = require('express')
 const adminController = require('../controller/adminController')
+const vrfyToken = require('../middleware/adminAuth')
+const multer = require('../middleware/multer')
 const adminRouter = express.Router()
 
-adminRouter.route('/users')
-.get(adminController.getAllUsers)
 
-adminRouter.route('/users/:id')
-.get(adminController.getUsersById)
+adminRouter.post('/login',(adminController.adminLogin))
 
-adminRouter.route('/category/:category')
-.get(adminController.getProductByCategory)
+.use(vrfyToken)
 
-adminRouter.route('/products/:id')
-.put(adminController.updateProduct)
-
-adminRouter.route('/create')
-.post(adminController.createProduct)
-
-adminRouter.route('/delete/:id')
-.delete(adminController.deleteProduct)
-
+.get('/users',(adminController.getAllUsers))
+.get('/users/:id',(adminController.getUsersById))
+.get('/products',(adminController.getProductByCategory))
+.put('/products/:id',(adminController.updateProduct))
+.post('/create',(adminController.createProduct))
+.delete('/delete/:id',(adminController.deleteProduct))
 
 
 module.exports = adminRouter

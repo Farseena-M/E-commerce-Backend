@@ -42,7 +42,7 @@ next()
 
 
 userSchema.methods.comparePasswordInDb = async (pswd,pswdDB)=>{
-return await bcrypt.compare(pswd,pswdDB);
+return  bcrypt.compare(pswd,pswdDB);
 }
 
 

@@ -12,7 +12,6 @@ const addProductToCart = asyncErrorHandler(async(req,res,next)=>{
        next(error)
     }
     const existingCart = await cart.findOne({User:userId})
-
     if(existingCart){
          const existingProductCart = existingCart.Product.indexOf(productId)
          if(existingProductCart!==-1){

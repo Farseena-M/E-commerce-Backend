@@ -1,6 +1,8 @@
 const products = require('../model/productSchema')
 const asyncErrorHandler = require('../utils/asyncErrorHandler');
 const customError = require('../utils/customError')
+
+
 const prdcts = asyncErrorHandler(async(req,res,next)=>{
     const newProduct = await products.create(req.body)
     res.status(201).json({

@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken')
 const customError = require('../utils/customError')
 
 
-const signToken = (id) =>{
-  return jwt.sign({id},process.env.SECRET_STR,{
+const signToken = ((id)=>{
+  return jwt.sign({id,isAdmin:false},`${process.env.SECRET_STR}`,{
     expiresIn:process.env.LOGIN_EXPIRES
   })
-}
+}) 
 
 const signup = asyncErrorHandler(async (req,res,next) =>{
 const newUser = await user.create(req.body)
@@ -45,7 +45,7 @@ const login = asyncErrorHandler(async(req,res,next)=>{
  }
 
 
- const token = signToken(user._id)
+ const token = signToken(userDetails._id)
 
   res.status(200).json({
     status:'success',

@@ -83,8 +83,8 @@ const getProductByCategory = asyncErrorHandler(async(req,res,next)=>{
 
 
 const createProduct = asyncErrorHandler(async(req,res,next)=>{
-    const newProduct = await products.create(req.body)
-
+    const {title,image,description,price,category} = req.body;
+    const newProduct = await products.create({title: title, image: image, description: description, price: price, category: category})
     res.status(201).json({
         status : 'Success',
         data : {

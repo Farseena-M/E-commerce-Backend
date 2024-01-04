@@ -1,7 +1,7 @@
 const express = require('express')
 const adminController = require('../controller/adminController')
 const vrfyToken = require('../middleware/adminAuth')
-const multer = require('../middleware/multer')
+const uploadCloudinary = require('../middleware/multer')
 const adminRouter = express.Router()
 
 
@@ -13,7 +13,7 @@ adminRouter.post('/login',(adminController.adminLogin))
 .get('/users/:id',(adminController.getUsersById))
 .get('/products',(adminController.getProductByCategory))
 .put('/products/:id',(adminController.updateProduct))
-.post('/create',(adminController.createProduct))
+.post('/create',uploadCloudinary,(adminController.createProduct))
 .delete('/delete/:id',(adminController.deleteProduct))
 
 

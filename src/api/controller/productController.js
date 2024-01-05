@@ -106,7 +106,17 @@ const payment = asyncErrorHandler(async (req, res) => {
             cancel_url:'http://localhost:9000/api/users/payment/cancel'
         })
         
-        
+        if(session){
+            res.status(200).json({
+                status: "success",
+                
+            });
+        }else{
+            res.status(200).json({
+                status: "Failed",
+                
+            });
+        }
 })
 
 module.exports = {

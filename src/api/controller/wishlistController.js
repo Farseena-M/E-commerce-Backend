@@ -51,7 +51,18 @@ const getWishlistProduct = asyncErrorHandler(async(req,res,next)=>{
     })
 })
 
+
+const deleteProductWishlist = asyncErrorHandler(async(req,res)=>{
+    const userId = req.params.id
+    const productId = req.body.product
+    await wishList.findByIdAndDelete(userId,productId)
+    res.status(200).json({
+        status:'Success',
+       })
+}) 
+
 module.exports = {
     addProductToWishList,
-    getWishlistProduct
+    getWishlistProduct,
+    deleteProductWishlist
 }

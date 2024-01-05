@@ -18,7 +18,7 @@ password:{
     required:[true,'Please enter your password'],
     unique:true,
     minLength:8,
-   select:false
+    select:false
 },
 profileImg:String,
 pofileThumbImage: String,

@@ -109,12 +109,11 @@ const payment = asyncErrorHandler(async (req, res) => {
         if(session){
             res.status(200).json({
                 status: "success",
-                
+                session:session.url
             });
         }else{
             res.status(500).json({
                 status: "Failed",
-                
             });
         }
 })

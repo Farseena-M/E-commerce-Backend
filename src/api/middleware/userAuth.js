@@ -11,16 +11,6 @@ const verifyToken = async(req,res,next)=>{
         })
     }
     const token = authHeader.split(' ')[1];
-    /* jwt.verify(token,process.env.SECRET_STR,(err,decode)=>{
-     if(err){
-        res.status(401).json({
-            status:'error',
-            error:'unauthorized'
-        })
-     }
-     req.email = decode.email
-     next()
-    }) */
 
     if(!token){
         const error = new customError('You are not loggedIn')

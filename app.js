@@ -3,13 +3,14 @@ const app=express();
 const morgan = require('morgan')
 const authRouter = require('./src/api/router/authRouter')
 const customError = require('./src/api/utils/customError')
-const usrRouter=require('./src/api/router/adminRouter')
+const usrRouter=require('./src/api/Router/userRouter')
 const globalErrorHandler = require('./src/api/controller/errorController')
 const adminRouter =require('./src/api/router/adminRouter')
 app.use(express.json())
 app.use(morgan('dev'))
+
 app.use('/api/users',authRouter,usrRouter)
-app.use('/api/admin/',adminRouter)
+app.use('/api/admin',adminRouter)
 
 
 app.all('*',(req,res,next)=>{

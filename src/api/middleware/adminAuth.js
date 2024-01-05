@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const customError = require('../utils/customError');
 
 const vrfyToken = async(req,res,next) =>{
+    console.log("hai");
     const authHeader = req.headers['authorization']
     if(!authHeader){
         res.status(404).json({

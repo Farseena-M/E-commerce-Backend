@@ -40,9 +40,10 @@ const addProductToCart = asyncErrorHandler(async(req,res,next)=>{
 })
 
 
-const getCartProduct = asyncErrorHandler(async(req,res,next)=>{
+const getCartProduct = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id
     const getCart = await cart.findOne({User:userId})
+    console.log(getCart);
     res.status(200).json({
         status:'Success',
         data:{
@@ -54,7 +55,7 @@ const getCartProduct = asyncErrorHandler(async(req,res,next)=>{
 
 
 
- const deleteProductCart = asyncErrorHandler(async(req,res)=>{
+/*  const deleteProductCart = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id
     const productId = req.body.product
     await cart.findByIdAndDelete(userId,productId)
@@ -62,10 +63,10 @@ const getCartProduct = asyncErrorHandler(async(req,res,next)=>{
         status:'Success',
        })
 }) 
-
+ */
 
 module.exports = {
     addProductToCart,
-    getCartProduct,
-    deleteProductCart
+    getCartProduct
+  
 }

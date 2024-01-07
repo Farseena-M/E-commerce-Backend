@@ -41,7 +41,7 @@ const getProductByCategory = asyncErrorHandler(async (req, res, next) => {
     }
 })
 
-const getProductById = asyncErrorHandler(async (req, res, next) => {
+    const getProductById = asyncErrorHandler(async (req, res, next) => {
     const productId = req.params.id;
     const prdctId = await products.findById(productId)
     if (!prdctId) {
@@ -91,7 +91,7 @@ const payment = asyncErrorHandler(async (req, res) => {
             name:usr.username,
             address:{
                 line1:'Moyan 123',
-                city:'Pottiporri',
+                city:'Vengara',
                 state:'kerala',
                 postal_code:'123456',
                 country:'IN'

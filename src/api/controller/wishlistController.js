@@ -40,9 +40,10 @@ const addProductToWishList = asyncErrorHandler(async(req,res,next)=>{
 
 
 
-const getWishlistProduct = asyncErrorHandler(async(req,res,next)=>{
+const getWishlistProduct = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id;
     const getWishlist = await wishList.findOne({User:userId})
+    console.log(getWishlist);
     res.status(200).json({
         status:'Success',
         data :{
@@ -52,17 +53,16 @@ const getWishlistProduct = asyncErrorHandler(async(req,res,next)=>{
 })
 
 
-const deleteProductWishlist = asyncErrorHandler(async(req,res)=>{
+/* const deleteProductWishlist = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id
     const productId = req.body.product
     await wishList.findByIdAndDelete(userId,productId)
     res.status(200).json({
         status:'Success',
        })
-}) 
+})  */
 
 module.exports = {
     addProductToWishList,
-    getWishlistProduct,
-    deleteProductWishlist
+    getWishlistProduct
 }

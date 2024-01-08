@@ -3,10 +3,9 @@ const products = require('../model/productSchema');
 const user = require('../model/userSchema');
 const {Stripe} = require('stripe');
 const asyncErrorHandler = require('../utils/asyncErrorHandler');
-const customError = require('../utils/customError')
 
 
-const prdcts = asyncErrorHandler(async (req, res, next) => {
+const prdcts = asyncErrorHandler(async (req, res) => {
     const newProduct = await products.create(req.body)
     res.status(201).json({
         status: 'Success',
@@ -16,7 +15,7 @@ const prdcts = asyncErrorHandler(async (req, res, next) => {
     })
 })
 
-const getAllProducts = asyncErrorHandler(async (req, res, next) => {
+const getAllProducts = asyncErrorHandler(async (req, res) => {
     const allProducts = await products.find()
     res.status(200).json({
         status: 'Success',
@@ -26,11 +25,11 @@ const getAllProducts = asyncErrorHandler(async (req, res, next) => {
     })
 })
 
-const getProductByCategory = asyncErrorHandler(async (req, res, next) => {
+const getProductByCategory = asyncErrorHandler(async (req, res) => {
     const category = req.params.category
     const categoryProduct = await products.find({ category })
     if (categoryProduct.length === 0) {
-        return next(new customError("Category does not exist", "404"))
+        return res.status(404).json({message:"Category does not exist"})
     } else {
         res.status(200).json({
             status: 'Success',
@@ -41,11 +40,11 @@ const getProductByCategory = asyncErrorHandler(async (req, res, next) => {
     }
 })
 
-    const getProductById = asyncErrorHandler(async (req, res, next) => {
+    const getProductById = asyncErrorHandler(async (req, res) => {
     const productId = req.params.id;
     const prdctId = await products.findById(productId)
     if (!prdctId) {
-        return next(new customError("Product does not exist", "404"))
+        return res.status(404).json({message:"Product does not exist"})
     } else {
         res.status(200).json({
             status: 'Success',
@@ -102,8 +101,8 @@ const payment = asyncErrorHandler(async (req, res) => {
             payment_method_types: ['card'],
             line_items: lineItem,
             mode:'payment',
-            success_url:'http://localhost:9000/api/users/payment/success',
-            cancel_url:'http://localhost:9000/api/users/payment/cancel'
+            success_url:'http://localhost:9000/api/users/payments/success',
+            cancel_url:'http://localhost:9000/api/users/payments/cancel'
         })
         
         if(session){
@@ -118,10 +117,15 @@ const payment = asyncErrorHandler(async (req, res) => {
         }
 })
 
+const paymentSuccess = (req,res)=>{
+    res.send('Success')
+}
+
 module.exports = {
     prdcts,
     getAllProducts,
     getProductByCategory,
     getProductById,
-    payment
+    payment,
+    paymentSuccess
 }

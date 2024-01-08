@@ -1,5 +1,4 @@
 const user = require('../model/userSchema')
-const customError = require('../utils/customError')
 const asyncErrorHandler = require('../utils/asyncErrorHandler')
 const products = require('../model/productSchema')
 const jwt = require('jsonwebtoken')
@@ -28,11 +27,10 @@ const adminLogin = asyncErrorHandler(async(req,res)=>{
 
 
 
-const getAllUsers = asyncErrorHandler(async(req,res,next)=>{
+const getAllUsers = asyncErrorHandler(async(req,res)=>{
     const allUsers = await user.find()
      if(!allUsers){
-        const error = new customError('Users does not exist')
-        next(error)
+        res.status(404).json({message:'Users does not exist'})
      }else{
         res.status(200).json({
             status:'Success',
@@ -45,12 +43,11 @@ const getAllUsers = asyncErrorHandler(async(req,res,next)=>{
 
 
 
-const getUsersById = asyncErrorHandler(async(req,res,next)=>{
+const getUsersById = asyncErrorHandler(async(req,res)=>{
     const usersId = req.params.id;
     const usrsId = await user.findById(usersId)
     if(!usrsId){
-        const error = new customError('User does not exist')
-        next(error)
+       res.status(404).json({message:'User does not exist'})
     }else{
     res.status(200).json({
         status : 'Success',
@@ -62,12 +59,11 @@ const getUsersById = asyncErrorHandler(async(req,res,next)=>{
 })
 
 
-const getProductByCategory = asyncErrorHandler(async(req,res,next)=>{
+const getProductByCategory = asyncErrorHandler(async(req,res)=>{
     const category = req.query.category;
     const productCategory = await products.find({category})
     if(productCategory.length===0){
-        const error = new customError('Products not found')
-        next(error)
+       res.status(404).json({message:'Products not found'})
     }else{
         res.status(200).json({
             status:'Success',
@@ -82,7 +78,7 @@ const getProductByCategory = asyncErrorHandler(async(req,res,next)=>{
 
 
 
-const createProduct = asyncErrorHandler(async(req,res,next)=>{
+const createProduct = asyncErrorHandler(async(req,res)=>{
     const {title,image,description,price,category} = req.body;
     const newProduct = await products.create({title: title, image: image, description: description, price: price, category: category})
     res.status(201).json({
@@ -95,7 +91,7 @@ const createProduct = asyncErrorHandler(async(req,res,next)=>{
 
 
 
-const updateProduct = asyncErrorHandler(async(req,res,next)=>{
+const updateProduct = asyncErrorHandler(async(req,res)=>{
     const update = await products.findByIdAndUpdate(req.params.id,req.body,{new:true})
     res.status(200).json({
         status:'Success',
@@ -106,7 +102,7 @@ const updateProduct = asyncErrorHandler(async(req,res,next)=>{
 })
 
 
-const deleteProduct = asyncErrorHandler(async(req,res,next)=>{
+const deleteProduct = asyncErrorHandler(async(req,res)=>{
     await products.findByIdAndDelete(req.params.id)
     res.status(200).json({
         status:'Deleted'

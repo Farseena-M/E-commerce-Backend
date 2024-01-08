@@ -1,23 +1,20 @@
 const asyncErrorHandler = require('../utils/asyncErrorHandler')
 const cart = require('../model/cartSchema')
 const products = require('../model/productSchema');
-const customError = require('../utils/customError');
 const { getProductById } = require('./productController');
 
-const addProductToCart = asyncErrorHandler(async(req,res,next)=>{
+const addProductToCart = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id;
     const productId = req.body.product;
     const checkProduct = await products.findById(productId);
     if(!checkProduct){ 
-       const error = new customError('Product not found') 
-       next(error)
+      res.status(404).json({message:'Product not found'})
     }
     const existingCart = await cart.findOne({User:userId})
     if(existingCart){
          const existingProductCart = existingCart.Product.indexOf(productId)
          if(existingProductCart!==-1){
-            const error = new customError('Product already exist')
-            next(error)
+            res.status(404).json({message:'Product already exist'})
          }else{
         existingCart.Product.push(productId)
         existingCart.TotalPrice += checkProduct.price
@@ -55,21 +52,17 @@ const getCartProduct = asyncErrorHandler(async(req,res)=>{
 
 
 
-const deleteProductCart = asyncErrorHandler(async(req,res,next)=>{
+const deleteProductCart = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id
     const productId = req.body.product
-    const getCart = await cart.findOne({User:userId})
-    if(!getCart){
-        const error = new customError(`${cart} is not found`)
-        next(error)
+    const getCartUser = await cart.findOne({User:userId})
+    if(!getCartUser){
+        res.status(404).json({message:`${cart} is not found`})
     }else{
-        const deleteIndex = getCart.Product.indexOf(productId)
-        const deleteProduct = getCart.Product[deleteIndex]
+        const deleteIndex = getCartUser.Product.indexOf(productId)
+        const deleteProduct = getCartUser.Product[deleteIndex]
         getCart.Product.splice(deleteIndex,1)
-        /*  const productPrice = (await getProductById(removeProduct)).price
-         console.log(productPrice);
-         getCart.TotalPrice -= price  */
-        await getCart.save()
+        await getCartUser.save()
         res.status(200).json({
             status:'Success'
         })

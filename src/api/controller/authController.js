@@ -1,7 +1,6 @@
 const user = require('../model/userSchema')
 const asyncErrorHandler = require('../utils/asyncErrorHandler');
 const jwt = require('jsonwebtoken')
-const customError = require('../utils/customError')
 
 
 const signToken = ((id)=>{
@@ -10,7 +9,7 @@ const signToken = ((id)=>{
   })
 }) 
 
-const signup = asyncErrorHandler(async (req,res,next) =>{
+const signup = asyncErrorHandler(async (req,res) =>{
 const newUser = await user.create(req.body)
 const token = signToken(newUser._id)
 
@@ -23,15 +22,14 @@ res.status(201).json({
 })
 })
 
-const login = asyncErrorHandler(async(req,res,next)=>{
+const login = asyncErrorHandler(async(req,res)=>{
   const email = req.body.email;
   const password = req.body.password;
 
   
 
   if(!email || !password){
-    const error = new customError('Please provide email ID & Password for login in!',400)
-    return next(error);
+    res.status(404).json({message:'Please provide email ID & Password for login in!'})
   }
       
   const userDetails = await user.findOne({email}).select('+password')
@@ -40,8 +38,7 @@ const login = asyncErrorHandler(async(req,res,next)=>{
   // const isMatch = await user.comparePasswordInDb(password,user.password)
  
   if(!userDetails || !(await userDetails.comparePasswordInDb(password,userDetails.password))){
-  const error = new customError('Incorrect email or password',400)
-  return next(error)
+    res.status(404).json({message:'Incorrect email or password'})
  }
 
 

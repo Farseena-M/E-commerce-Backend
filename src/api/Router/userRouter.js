@@ -17,5 +17,6 @@ usrRouter.post('/prdcts',(productController.prdcts))
 .get('/wishlist/:id',(wishlistController.getWishlistProduct))
 .delete('/wishlist/:id',(wishlistController.deleteProductWishlist))
 .post('/payments/:id',(productController.payment))
+.get('payments/success',(productController.paymentSuccess))
 
 module.exports = usrRouter

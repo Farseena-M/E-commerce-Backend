@@ -12,10 +12,10 @@ usrRouter.post('/prdcts',(productController.prdcts))
 .get('/products',(productController.getAllProducts))
 .post('/cart/:id',(cartController.addProductToCart))
 .get('/cart/:id',(cartController.getCartProduct))
-//.delete('/cart/:id',(cartController.deleteProductCart))
+.delete('/cart/:id',(cartController.deleteProductCart))
 .post('/wishlist/:id',(wishlistController.addProductToWishList))
 .get('/wishlist/:id',(wishlistController.getWishlistProduct))
-//.delete('/wishlist/:id',(wishlistController.deleteProductWishlist))
+.delete('/wishlist/:id',(wishlistController.deleteProductWishlist))
 .post('/payments/:id',(productController.payment))
 
 module.exports = usrRouter

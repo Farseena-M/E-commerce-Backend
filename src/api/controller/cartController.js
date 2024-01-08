@@ -2,10 +2,11 @@ const asyncErrorHandler = require('../utils/asyncErrorHandler')
 const cart = require('../model/cartSchema')
 const products = require('../model/productSchema');
 const customError = require('../utils/customError');
+const { getProductById } = require('./productController');
 
 const addProductToCart = asyncErrorHandler(async(req,res,next)=>{
     const userId = req.params.id;
-    const productId = req.body.Product;
+    const productId = req.body.product;
     const checkProduct = await products.findById(productId);
     if(!checkProduct){ 
        const error = new customError('Product not found') 
@@ -54,19 +55,31 @@ const getCartProduct = asyncErrorHandler(async(req,res)=>{
 
 
 
-
-/*  const deleteProductCart = asyncErrorHandler(async(req,res)=>{
+const deleteProductCart = asyncErrorHandler(async(req,res,next)=>{
     const userId = req.params.id
     const productId = req.body.product
-    await cart.findByIdAndDelete(userId,productId)
-    res.status(200).json({
-        status:'Success',
-       })
-}) 
- */
+    const getCart = await cart.findOne({User:userId})
+    if(!getCart){
+        const error = new customError(`${cart} is not found`)
+        next(error)
+    }else{
+        const deleteIndex = getCart.Product.indexOf(productId)
+        const deleteProduct = getCart.Product[deleteIndex]
+        getCart.Product.splice(deleteIndex,1)
+        /*  const productPrice = (await getProductById(removeProduct)).price
+         console.log(productPrice);
+         getCart.TotalPrice -= price  */
+        await getCart.save()
+        res.status(200).json({
+            status:'Success'
+        })
+    }
+})
+
 
 module.exports = {
     addProductToCart,
-    getCartProduct
+    getCartProduct,
+    deleteProductCart
   
 }

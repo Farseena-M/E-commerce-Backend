@@ -4,7 +4,7 @@ const cartController = require('../controller/cartController')
 const wishlistController = require('../controller/wishlistController')
 const verifyToken = require('../middleware/userAuth')
 const usrRouter = express.Router()
-
+usrRouter.get('payments/success',(productController.paymentSuccess))
 .use(verifyToken)
 usrRouter.post('/prdcts',(productController.prdcts))
 .get('/category/:category',(productController.getProductByCategory))
@@ -17,6 +17,5 @@ usrRouter.post('/prdcts',(productController.prdcts))
 .get('/wishlist/:id',(wishlistController.getWishlistProduct))
 .delete('/wishlist/:id',(wishlistController.deleteProductWishlist))
 .post('/payments/:id',(productController.payment))
-.get('payments/success',(productController.paymentSuccess))
 
 module.exports = usrRouter

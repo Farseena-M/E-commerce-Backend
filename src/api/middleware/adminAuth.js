@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const customError = require('../utils/customError');
 
 const vrfyToken = async(req,res,next) =>{
     console.log("hai");
@@ -13,15 +12,13 @@ const vrfyToken = async(req,res,next) =>{
     const token = authHeader.split(' ')[1];
 
     if(!token){
-        const error = new customError('You are not loggedIn')
-        next(error)
+        res.status(404).json({message:'You are not loggedIn'})
     }
 
     const decodeToken = await jwt.verify(token,process.env.SECRET_STR)
     const isAdmin = decodeToken.isAdmin
     if(!isAdmin){
-        const error = new customError('Unauthorized access')
-        next(error)
+        res.status(404).json({message:'Unauthorized access'})
     }
     next()
 

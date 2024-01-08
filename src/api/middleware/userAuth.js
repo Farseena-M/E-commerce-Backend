@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const user = require('../model/userSchema');
-const customError = require('../utils/customError');
 
 const verifyToken = async(req,res,next)=>{
     const authHeader = req.headers['authorization'];
@@ -13,8 +12,7 @@ const verifyToken = async(req,res,next)=>{
     const token = authHeader.split(' ')[1];
 
     if(!token){
-        const error = new customError('You are not loggedIn')
-        next(error)
+        res.status(404).json({message:'You are not loggedIn'})
     }
 
 
@@ -22,8 +20,7 @@ const verifyToken = async(req,res,next)=>{
     const userId = decodeToken.id
     const checkUser = await user.findById(userId)
     if(!checkUser){
-        const error= new customError ('User does not exist')
-        next(error)
+        res.status(404).json({message:'User does not exist'})
     }
     next()
 }

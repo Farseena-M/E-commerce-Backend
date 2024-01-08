@@ -61,7 +61,7 @@ const deleteProductCart = asyncErrorHandler(async(req,res)=>{
     }else{
         const deleteIndex = getCartUser.Product.indexOf(productId)
         const deleteProduct = getCartUser.Product[deleteIndex]
-        getCart.Product.splice(deleteIndex,1)
+        getCartUser.Product.splice(deleteIndex,1)
         await getCartUser.save()
         res.status(200).json({
             status:'Success'

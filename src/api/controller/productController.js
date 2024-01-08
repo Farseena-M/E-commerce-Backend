@@ -28,6 +28,7 @@ const getAllProducts = asyncErrorHandler(async (req, res) => {
 const getProductByCategory = asyncErrorHandler(async (req, res) => {
     const category = req.params.category
     const categoryProduct = await products.find({ category })
+    console.log(categoryProduct);
     if (categoryProduct.length === 0) {
         return res.status(404).json({message:"Category does not exist"})
     } else {

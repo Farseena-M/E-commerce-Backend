@@ -47,6 +47,4 @@ const uploadCloudinary = (req,res,next) =>{
     })
 }
 
-module.exports = uploadCloudinary
-
- 
+module.exports = uploadCloudinary 

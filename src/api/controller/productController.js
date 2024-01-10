@@ -1,4 +1,4 @@
-const cart = require('../model/cartSchema');
+const Cart = require('../model/cartSchema');
 const products = require('../model/productSchema');
 const user = require('../model/userSchema');
 const { Stripe } = require('stripe');
@@ -63,7 +63,7 @@ const getProductById = asyncErrorHandler(async (req, res) => {
 const payment = asyncErrorHandler(async (req, res) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
     const userId = req.params.id
-    const cartModel = await cart.findOne({ User: userId })
+    const cartModel = await Cart.findOne({ User: userId })
     const usr = await user.findById({ _id: userId })
     const PRDCT = await products.find({ _id: cartModel.Product });
     if (!usr) {

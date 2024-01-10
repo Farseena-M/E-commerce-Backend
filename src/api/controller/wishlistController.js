@@ -1,5 +1,5 @@
 const products = require('../model/productSchema');
-const wishList = require('../model/wishlistSchema')
+const WishList = require('../model/wishlistSchema')
 const asyncErrorHandler = require('../utils/asyncErrorHandler');
 
 const addProductToWishList = asyncErrorHandler(async(req,res)=>{
@@ -9,7 +9,7 @@ const addProductToWishList = asyncErrorHandler(async(req,res)=>{
     if(!checkProduct){ 
        res.status(404).json({message:'Product not found'})
     }
-    const existingWishlist = await wishList.findOne({User:userId})
+    const existingWishlist = await WishList.findOne({User:userId})
     if(existingWishlist){
          const existingProductWishlist = existingWishlist.Product.indexOf(productId)
          if(existingProductWishlist!==-1){
@@ -25,7 +25,7 @@ const addProductToWishList = asyncErrorHandler(async(req,res)=>{
         })
     }
     }else{
-        const newWishlist = await wishList.create({User:userId,Product:[productId]})
+        const newWishlist = await WishList.create({User:userId,Product:[productId]})
         res.status(200).json({
             status:'Success',
             data:{
@@ -39,7 +39,7 @@ const addProductToWishList = asyncErrorHandler(async(req,res)=>{
 
 const getWishlistProduct = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id;
-    const getWishlist = await wishList.findOne({User:userId})
+    const getWishlist = await WishList.findOne({User:userId})
     console.log(getWishlist);
     res.status(200).json({
         status:'Success',
@@ -53,9 +53,9 @@ const getWishlistProduct = asyncErrorHandler(async(req,res)=>{
 const deleteProductWishlist = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id
     const productId = req.body.product
-    const getWishlistUser = await wishList.findOne({User:userId})
+    const getWishlistUser = await WishList.findOne({User:userId})
     if(!getWishlistUser){
-        res.status(404).json({message:`${wishList} is not found`})
+        res.status(404).json({message:`${WishList} is not found`})
     }else{
         const deleteIndex = getWishlistUser.Product.indexOf(productId)
         const deleteProduct = getWishlistUser.Product[deleteIndex]

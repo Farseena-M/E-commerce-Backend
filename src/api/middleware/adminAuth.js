@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 const vrfyToken = async(req,res,next) =>{
-    console.log("hai");
     const authHeader = req.headers['authorization']
     if(!authHeader){
         res.status(404).json({

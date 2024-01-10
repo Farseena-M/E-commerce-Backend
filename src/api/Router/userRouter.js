@@ -6,6 +6,7 @@ const verifyToken = require('../middleware/userAuth')
 const usrRouter = express.Router()
 
 usrRouter.get('/payment/success',(productController.paymentSuccess))
+.get('/payment/cancel',(productController.paymentCancel))
 .use(verifyToken)
 .post('/prdcts',(productController.prdcts))
 .get('/category/:category',(productController.getProductByCategory))

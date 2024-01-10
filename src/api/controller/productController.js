@@ -4,9 +4,6 @@ const user = require('../model/userSchema');
 const { Stripe } = require('stripe');
 const asyncErrorHandler = require('../utils/asyncErrorHandler');
 const Order = require('../model/orderSchema');
-const { default: mongoose } = require('mongoose');
-let sValue = []
-
 
 const prdcts = asyncErrorHandler(async (req, res) => {
     const newProduct = await products.create(req.body)
@@ -60,7 +57,7 @@ const getProductById = asyncErrorHandler(async (req, res) => {
 })
 
 
-//Order&Payment
+          //Order&Payment
 
 
 const payment = asyncErrorHandler(async (req, res) => {
@@ -130,72 +127,15 @@ const payment = asyncErrorHandler(async (req, res) => {
             status: 'Failed'
         })
     }
-
-    // if(!session){
-    //  res.status(404).json({
-    //     status:'Failure',
-    //     message:'Error occured in session side'
-    //  })
-    // }
-    // sValue = {userId,usr,session}
-    // res.status(200).json({
-    //     status:'Success',
-    //     message:'Stripe payment session created',
-    //     url:session.url
-    // })
 })
-//    const success = (req,res) =>{
-//     const {userId,usr,session} = sValue
-//     const id = usr._id
-//     const cartItems = usr.cart
 
-//    const orders = Order.create({
-//    user:cartModel.User,
-//    prdcts:cartItems.map((value)=>new mongoose.Types.ObjectId(value._id)),
-//    orderId:session.id,
-//    totalPrice:cartModel.TotalPrice,
-//    totalItems:cartModel.Product.length,
-//    orderStatus:session.payment_status
-//     })
-//     if(!orders){
-//         return res.json({message:'error occured while inputing to orderDB'})
-//     }
-//     const orderId = orders._id
-//     const userUpdate = user.updateOne(
-//         {_id:userId},
-//         {
-//             $push:{orders:orderId},
-//             $set:{cart:[]}
-//         }
-//     )
-//     if(userUpdate){
-//         res.status(200).json({
-//             status:'Success',
-//             message:'payment successfull'
-//         })
-//     }else{
-//         res.status(500).json({
-//             status:'Error',
-//             message:'Failed to update user data'
-//         })
-//     }
-//   }
-
-const cancel = (req, res) => {
-    res.status(204).json({
-        status: 'no content',
-        message: 'Payment cancelled'
-    })
+const paymentSuccess = (req,res) =>{
+    res.send('<h1>Success</h1>')
 }
 
-
-
-
-
-
-  const paymentSuccess = (req,res) =>{
-    res.send('<h1>Success</h1>')
-}  
+const paymentCancel = (req,res) =>{
+    res.send('<h1>Cancel</h1>')
+}
 
 module.exports = {
     prdcts,
@@ -203,5 +143,6 @@ module.exports = {
     getProductByCategory,
     getProductById,
     payment,
-   paymentSuccess
+    paymentSuccess,
+    paymentCancel
 }

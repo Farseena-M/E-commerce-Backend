@@ -1,7 +1,6 @@
 const products = require('../model/productSchema');
 const wishList = require('../model/wishlistSchema')
 const asyncErrorHandler = require('../utils/asyncErrorHandler');
-const { getProductById } = require('./productController');
 
 const addProductToWishList = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id;

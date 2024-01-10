@@ -30,11 +30,11 @@ const uploadCloudinary = (req,res,next) =>{
                 folder : 'farseena'
             })
             req.body.image = result.secure_url
-            fs.unlink(req.file.path,(unlink) => {
+           /*  fs.unlink(req.file.path,(unlink) => {
                 if(unlink){
                     console.log('deleting local file',unlink);
                 }
-            })
+            }) */
             next()
         }
         catch(err){

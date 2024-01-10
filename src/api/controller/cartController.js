@@ -1,7 +1,6 @@
 const asyncErrorHandler = require('../utils/asyncErrorHandler')
 const cart = require('../model/cartSchema')
 const products = require('../model/productSchema');
-const { getProductById } = require('./productController');
 
 const addProductToCart = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id;
@@ -62,6 +61,9 @@ const deleteProductCart = asyncErrorHandler(async(req,res)=>{
         const deleteIndex = getCartUser.Product.indexOf(productId)
         const deleteProduct = getCartUser.Product[deleteIndex]
         getCartUser.Product.splice(deleteIndex,1)
+       /*  const deleteProductPrice = deleteProduct.price
+        console.log(deleteProductPrice);
+        getCartUser.TotalPrice -= deleteProductPrice */
         await getCartUser.save()
         res.status(200).json({
             status:'Success'

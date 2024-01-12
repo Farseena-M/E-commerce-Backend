@@ -5,6 +5,8 @@ const authRouter = require('./src/api/router/authRouter')
 const usrRouter=require('./src/api/Router/userRouter')
 const globalErrorHandler = require('./src/api/controller/errorController')
 const adminRouter =require('./src/api/router/adminRouter')
+const cors = require('cors')
+app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
 

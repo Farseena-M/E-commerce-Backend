@@ -23,22 +23,22 @@ res.status(201).json({
 })
 
 const login = asyncErrorHandler(async(req,res)=>{
-  const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
 
   
 
-  if(!email || !password){
-    res.status(404).json({message:'Please provide email ID & Password for login in!'})
+  if(!username || !password){
+    res.status(404).json({message:'Please provide username & Password for login in!'})
   }
       
-  const userDetails = await user.findOne({email}).select('+password')
+  const userDetails = await user.findOne({username}).select('+password')
 
 
   // const isMatch = await user.comparePasswordInDb(password,user.password)
  
   if(!userDetails || !(await userDetails.comparePasswordInDb(password,userDetails.password))){
-    res.status(404).json({message:'Incorrect email or password'})
+    res.status(404).json({message:'Incorrect username or password'})
  }
 
 
@@ -49,9 +49,5 @@ const login = asyncErrorHandler(async(req,res)=>{
     token,
     userDetails
   })
-
 })
-
-
-
 module.exports={signup,login}

@@ -41,6 +41,7 @@ const getProductByCategory = asyncErrorHandler(async (req, res) => {
     }
 })
 
+
 const getProductById = asyncErrorHandler(async (req, res) => {
     const productId = req.params.id;
     const prdctId = await products.findById(productId)

@@ -17,6 +17,9 @@ const productSchema = new mongoose.Schema({
     category:{
         type:String
     },
+    quantity:{
+        type:Number
+    },
     isDeleted:{
         type: Boolean,
         default: false

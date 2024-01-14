@@ -4,9 +4,9 @@ const products = require('../model/productSchema')
 const jwt = require('jsonwebtoken')
 
 const adminLogin = asyncErrorHandler(async(req,res)=>{
-    const {email,password} = req.body;
-    if( email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
-        const token = jwt.sign({email,isAdmin :true},process.env.SECRET_STR,{
+    const {username,password} = req.body;
+    if( username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD){
+        const token = jwt.sign({username,isAdmin :true},process.env.SECRET_STR,{
             expiresIn : process.env.LOGIN_EXPIRES
         })
         res.status(200).json({

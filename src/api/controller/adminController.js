@@ -4,9 +4,9 @@ const products = require('../model/productSchema')
 const jwt = require('jsonwebtoken')
 
 const adminLogin = asyncErrorHandler(async(req,res)=>{
-    const {email,password} = req.body;
-    if( email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
-        const token = jwt.sign({email,isAdmin :true},process.env.SECRET_STR,{
+    const {username,password} = req.body;
+    if( username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD){
+        const token = jwt.sign({username,isAdmin :true},process.env.SECRET_STR,{
             expiresIn : process.env.LOGIN_EXPIRES
         })
         res.status(200).json({
@@ -79,8 +79,8 @@ const getProductByCategory = asyncErrorHandler(async(req,res)=>{
 
 
 const createProduct = asyncErrorHandler(async(req,res)=>{
-    const {title,image,description,price,category} = req.body;
-    const newProduct = await products.create({title: title, image: image, description: description, price: price, category: category})
+    const {title,image,description,price,category,quantity} = req.body;
+    const newProduct = await products.create({title: title, image: image, description: description, price: price, category: category,quantity:quantity})
     res.status(201).json({
         status : 'Success',
         data : {
